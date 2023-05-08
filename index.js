@@ -26,3 +26,14 @@ app.post('/api/genres', (req, res) => {
     genres.push(genre);
     res.send(genre);
 });
+
+app.put('/:id', (req, res) => {
+    const genre = genres.find(c=> c.id===parseInt(req.params.id));
+    if(!genre) return res.status(400).send('The genre with the given ID was not found.');
+
+    const { error } = validateGenre(req.body);
+    if(error) return res.send(400).send(error.details[0].message);
+
+    genre.name = req.body.name;
+    res.send(genre);
+});
