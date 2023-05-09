@@ -39,14 +39,10 @@ router.put('/:id', async (req, res) => {
     res.send(genre);
 });
 
-router.delete('/:id', (req, res) => {
-    const genre = genres.find(c => c.id === parseInt(req.params.id));
+router.delete('/:id', async (req, res) => {
+    const genre = await Genre.FindByIdAndRemove(req.params.id);
 
     if (!genre) return res.status(404).send('The genre with the given ID was not found');
-
-    const index = genres.indexOf(genre);
-    genres.splice(index, 1);
-
     res.send(genre);
 });
 
