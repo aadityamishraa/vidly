@@ -22,11 +22,11 @@ const customerSchema = new mongoose.Schema({
     }
 });
 
-const Customers = mongoose.model('Genre', customerSchema);
+const Customer = mongoose.model('Customer', customerSchema);
 
 
 router.get('/', async (req, res) => {
-    const customers = await Genre.find().sort('name');
+    const customers = await Customer.find().sort('name');
     res.send(customers);
 });
 
@@ -34,10 +34,14 @@ router.post('/', async (req, res) => {
     const { error } = new Joi.ValidationError(req.body, Customers);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let Customers = new Customers({ name: req.body.name });
+    let customer = new Customer({
+        name: req.body.name,
+        isGold: req.body.isGold,
+        phone: req.body.phone, 
+    });
 
-    Customers = await Customers.save();
-    res.send(Customers);
+    customer = await Customer.save();
+    res.send(ustomer);
 });
 
 module.exports = router;
