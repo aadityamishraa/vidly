@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { Movie, movieSchema } = require('../models/movie');
-const { Genre } = require('../models/genre');
+const { Genre } = require('../models/movie');
 
 router.get('/', (req, res) => {
     const movies = Movie.find().sort('name');
