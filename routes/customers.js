@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const {Customer} = require('../models/customer');
 
@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { error } = new Joi.ValidationError(req.body, Customers);
+    const { error } = new Joi.ValidationError(req.body, Customer);
     if (error) return res.status(400).send(error.details[0].message);
 
     let customer = new Customer({
