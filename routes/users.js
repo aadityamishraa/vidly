@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const _ = require('lodash');
+
 const express = require('express');
 const router = express.Router();
 const {User, userSchema} = require('../models/user');
@@ -18,16 +20,18 @@ router.post('/', async (req, res) => {
     //     password: req.body.password
     // });
 
+    user = new User(_.pick(req.body, ['name', 'email', 'password'])); // we can see we are not writing req.body again and again for each properties
 
     /**
      * Lodash - It is a popular library that helps to use some utilities funciton in project
      * Instead we can use lodash package to get some specific properties from an object
      */
 
-    
+
     await user.save();
 
-    res.send(user);
+    // sending response and not send the password
+    res.send(_.pick(user, ['name', 'email']));
 
 });
 
