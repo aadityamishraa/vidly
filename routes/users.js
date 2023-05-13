@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const _ = require('lodash');
-
+const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
 const {User, userSchema} = require('../models/user');
@@ -14,6 +14,12 @@ router.post('/', async (req, res) => {
     let user = await User.findOne({ email: req.body.email});
     if(user) return res.status(400).send('User alread exists');
 
+     /**
+     * Lodash - It is a popular library that helps to use some utilities funciton in project
+     * Instead we can use lodash package to get some specific properties from an object
+     */
+
+
     // user = new User({
     //     name: req.body.name,
     //     email: req.body.email,
@@ -22,11 +28,11 @@ router.post('/', async (req, res) => {
 
     user = new User(_.pick(req.body, ['name', 'email', 'password'])); // we can see we are not writing req.body again and again for each properties
 
-    /**
-     * Lodash - It is a popular library that helps to use some utilities funciton in project
-     * Instead we can use lodash package to get some specific properties from an object
-     */
+    // we're encrypting the password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
+   
 
     await user.save();
 
