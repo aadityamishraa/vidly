@@ -12,12 +12,19 @@ router.post('/', async (req, res) => {
     let user = await User.findOne({ email: req.body.email});
     if(user) return res.status(400).send('User alread exists');
 
-    user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    });
+    // user = new User({
+    //     name: req.body.name,
+    //     email: req.body.email,
+    //     password: req.body.password
+    // });
 
+
+    /**
+     * Lodash - It is a popular library that helps to use some utilities funciton in project
+     * Instead we can use lodash package to get some specific properties from an object
+     */
+
+    
     await user.save();
 
     res.send(user);
