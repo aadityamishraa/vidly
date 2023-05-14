@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     if(user) return res.status(400).send('User alread exists');
 
      /**
-     * Lodash - It is a popular library that helps to use some utilities funciton in project
+     * Lodash - It is a popular library that helps to use some utility funcitons in project
      * Instead we can use lodash package to get some specific properties from an object
      */
 
