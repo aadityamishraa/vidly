@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
 
     await user.save();
 
-    // sending response and not send the password
+    // sending response without sending the password
     res.send(_.pick(user, ['name', 'email']));
 
 });
