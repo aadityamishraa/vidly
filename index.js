@@ -1,5 +1,4 @@
-const Joi = require('joi');
-Joi.objectId = require('Joi.objectId')(Joi);
+
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
