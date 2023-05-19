@@ -42,7 +42,10 @@ router.post('/', async (req, res) => {
     // sending response without sending the password
     // res.send(_.pick(user, ['name', 'email']));
 
-    const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+    // const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+    // use instead this
+
+    const token = user.generateAuthToken();
 
     res.header('x-auth-header', token).send(_.pick(user,['name', 'email']));
 

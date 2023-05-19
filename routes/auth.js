@@ -18,7 +18,9 @@ router.post('/', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, User.password);
     if(!validPassword) return res.status(400).send('Incorrect email or password');
 
-    const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+    // const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey')); // we're repeating this thing again and agan. therefore we'll create a method of user object to generate a token whereever required;
+
+    const token = user.generateAuthToken();
     res.send(token);
 });
 
