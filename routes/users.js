@@ -1,3 +1,6 @@
+const config = require('config');
+const jwt = require('jsonwebtoken');
+
 const Joi = require('joi');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
@@ -37,7 +40,11 @@ router.post('/', async (req, res) => {
     await user.save();
 
     // sending response without sending the password
-    res.send(_.pick(user, ['name', 'email']));
+    // res.send(_.pick(user, ['name', 'email']));
+
+    const token = jwt.sign({ _id: user._id}, config.get('jwtPrivateKey'));
+
+    res.header('x-auth-header', token).send(_.pick(user,['name', 'email']));
 
 });
 
