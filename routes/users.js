@@ -1,5 +1,4 @@
-const config = require('config');
-const jwt = require('jsonwebtoken');
+
 
 const Joi = require('joi');
 const _ = require('lodash');
@@ -9,6 +8,10 @@ const router = express.Router();
 const {User, userSchema} = require('../models/user');
 
 
+router.get('/me', auth, async (req, res)=>{
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user);
+});
 router.post('/', async (req, res) => {
     const { error } = new Joi.ValidationError(req.body, userSchema);
 
